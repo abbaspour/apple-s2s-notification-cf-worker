@@ -1,0 +1,7 @@
+name = "apple-s2s-notification-cf-worker"
+main = "./src/index.mjs"
+compatibility_date = "2024-12-04"
+compatibility_flags = [ "nodejs_compat" ]
+
+[vars]
+APP_BUNDLE_ID = "net.abbaspour.amin.siwa"

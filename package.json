@@ -1,0 +1,13 @@
+{
+  "name": "apple-s2s-notification-cf-worker",
+  "version": "0.1.0",
+  "description": "Cloudflare Worker listening to Apple's server-to-server notifications and updating users in Auth0 accordingly",
+  "main": "src/index.mjs",
+  "scripts": {
+  },
+  "author": "Amin Abbaspour",
+  "license": "LGPL-3.0-or-later",
+  "dependencies": {
+    "jose": "^5.9.6"
+  }
+}

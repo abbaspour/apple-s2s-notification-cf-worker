@@ -1,0 +1,8 @@
+{
+  "iss": "https://appleid.apple.com",
+  "aud": "net.abbaspour.amin.siwa",
+  "exp": 1733447629,
+  "iat": 1733361229,
+  "jti": "33ugdfjRKVbY3lYS4U5VPg",
+  "events": "{\"type\":\"consent-revoked\",\"sub\":\"001627.8a95ea9df81a4a70a4662612c8de8f19.0001\",\"event_time\":1733361219695}"
+}
