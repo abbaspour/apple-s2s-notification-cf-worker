@@ -31,8 +31,10 @@ export default {
                 return new Response('Bad Request: Payload missing events', {status: 400});
             }
 
-            // Process the event from the claims
-            const response = await handleAppleEvent(events);
+            const connection = env.CONNECTION_NAME || 'apple';
+
+                // Process the event from the claims
+            const response = await handleAppleEvent(events, connection);
 
             return new Response(JSON.stringify(response), {
                 headers: {'Content-Type': 'application/json'},
@@ -65,20 +67,29 @@ async function verifyAndExtractClaims(token, audience) {
     }
 }
 
+const userId = (connection, sub) => connection + '|' + sub;
+
 /**
  * Handle the event from Apple's JWT claims.
  */
-async function handleAppleEvent(events) {
-    console.log('Handling Event from Claims:', events);
+async function handleAppleEvent(eventString, connection) {
+    console.log('Handling Event:', eventString);
+
+    const events = JSON.parse(eventString);
+
+    const user_id = userId(connection, events.sub);
 
     switch (events.type) {
-        case 'consent-revoked':
         case 'account-delete':
-            await deleteUser('apple|' + events.sub); // auth0 sub is strategy|upstream_sub
+            await deleteUser(user_id); // auth0 sub is strategy|upstream_sub
+            break;
+        case 'consent-revoked':
+            await blockUser(user_id);
             break;
         case 'email-disabled':
             break;
         case 'email-enabled':
+            await patchUser(user_id, events.email);
             break;
 
         default:
@@ -88,7 +99,17 @@ async function handleAppleEvent(events) {
     return {status: 'success', type: events?.type};
 }
 
-async function deleteUser(sub) {
-    console.log('Deleting Auth0 user:', sub);
+async function deleteUser(user_id) {
+    console.log('Deleting Auth0 user:', user_id);
     // Implement your logic to delete the user
+}
+
+async function blockUser(user_id) {
+    console.log('Block Auth0 user:', user_id);
+    // Implement your logic to block the user
+}
+
+async function patchUser(user_id, email) {
+    console.log(`Patch Auth0 user: ${user_id} to new email: ${email}`);
+    // Implement your logic to patch the user
 }

@@ -3,5 +3,8 @@ main = "./src/index.mjs"
 compatibility_date = "2024-12-04"
 compatibility_flags = [ "nodejs_compat" ]
 
+[observability.logs]
+enabled = true
+
 [vars]
 APP_BUNDLE_ID = "net.abbaspour.amin.siwa"
